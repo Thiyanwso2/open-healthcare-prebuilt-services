@@ -77,7 +77,7 @@ service / on new http:Listener(port) {
         io:Error? result = io:fileWriteLines(auditLogPath, [auditEvent.toJsonString()], option = io:APPEND);
         if result is io:Error {
             // keep track of failed audit events in an inmemory buffer and retry to write
-            log:printWarn("Failed to write the audit event to the log file. Trying to put to a cache and retry later.", result, id = auditEvent.id, auditEvent = auditEvent.toJson());
+            // log:printWarn("Failed to write the audit event to the log file. Trying to put to a cache and retry later.", result, id = auditEvent.id, auditEvent = auditEvent.toJson());
             do {
                 check cache.put(check auditEvent.id.ensureType(), auditEvent);
                 return http:STATUS_ACCEPTED;
